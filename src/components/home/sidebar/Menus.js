@@ -1,7 +1,19 @@
-import React, { Component, Fragment } from "react";
-import List from "material-ui/List";
-import { withRouter } from "react-router";
-import ListSubheader from "material-ui/List/ListSubheader";
+import React, { Component, Fragment, useState } from "react";
+import List from '@mui/material/List';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import PersonIcon from '@mui/icons-material/Person';
+
+import { withRouter } from "react-router"; 
 import ViewModule from "material-ui-icons/ViewModule";
 import GroupAdd from "material-ui-icons/GroupAdd";
 import SupervisorAccount from "material-ui-icons/SupervisorAccount";
@@ -12,77 +24,83 @@ import LocalAtm from "material-ui-icons/LocalAtm";
 import More from "material-ui-icons/More";
 import SidebarMenu from "../../controls/SidebarMenu";
 
-class Menus extends Component {
-  state = {};
+const Menus = (props) => {
+  
+  const [openSetupMenu, setOpenSetupMenu] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  
+  const isSelected = path =>
+    props.history.location.pathname === `/${path}` ||
+    props.history.location.pathname.includes(`/${path}/`);
 
-  isSelected = path =>
-    this.props.history.location.pathname === `/${path}` ||
-    this.props.history.location.pathname.includes(`/${path}/`);
-
-  onMenuClick = route => {
-    this.props.history.push(route);
+  const onMenuClick = route => {
+    props.history.push(route);
   };
 
-  render() {
+  const toggleSetupsMenu = () => {
+    setOpenSetupMenu(!openSetupMenu);
+  }
+
+  const handleClick = (e, index, route="") => {
+    setSelectedIndex(index);
+    if (index === 0) toggleSetupsMenu();
+    if (route === "") return;
+    
+    onMenuClick(route);
+    
+  }
+
     return (
       <Fragment>
-        <List>
-          <SidebarMenu
-            isSelected={this.isSelected("sale")}
-            onClick={() => this.onMenuClick("/sale")}
-            text="Sale"
-            icon={<ViewModule />}
-          />
-
-          <ListSubheader>MASTER</ListSubheader>
-
-          <SidebarMenu
-            isSelected={this.isSelected("customers")}
-            onClick={() => this.onMenuClick("/customers")}
-            text="Customers"
-            icon={<GroupAdd />}
-          />
-
-          <SidebarMenu
-            isSelected={this.isSelected("vendors")}
-            onClick={() => this.onMenuClick("/vendors")}
-            text="Vendors"
-            icon={<SupervisorAccount />}
-          />
-
-          <SidebarMenu
-            isSelected={
-              this.isSelected("products") || this.isSelected("producttypes")
+           <List
+            sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+            component="nav"
+            aria-labelledby="nested-list-subheader"
+            subheader={
+              <ListSubheader component="div" id="nested-list-subheader">
+                Menu
+              </ListSubheader>
             }
-            onClick={() => this.onMenuClick("/products")}
-            text="Products"
-            icon={<More />}
-          />
-
-          <SidebarMenu
-            isSelected={
-              this.isSelected("expense") || this.isSelected("expensetypes")
-            }
-            onClick={() => this.onMenuClick("/expense")}
-            text="Expense"
-            icon={<LocalAtm />}
-          />
-
-          <SidebarMenu
-            isSelected={this.isSelected("receivings")}
-            onClick={() => this.onMenuClick("/receivings")}
-            text="Recievings"
-            icon={<NoteAdd />}
-          />
-
-          <ListSubheader>REPORTS</ListSubheader>
-          <SidebarMenu text="Todays Sales" icon={<Assessment />} />
-          <SidebarMenu text="Credit Sale" icon={<LocalGroceryStore />} />
-          <SidebarMenu text="Expense" icon={<LocalAtm />} />
-        </List>
+          >
+            <ListItemButton onClick={(e) => handleClick(e, 0)} selected={selectedIndex === 0} >
+              <ListItemIcon>
+                  <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Setups" />
+              {openSetupMenu ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse in={openSetupMenu} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleClick(e, 1, '/setup/branch-setup')} selected={selectedIndex === 1} >
+                  <ListItemIcon>
+                    <StoreMallDirectoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Branch" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleClick(e, 2, '/setup/bank-setup')} selected={selectedIndex === 2}>
+                  <ListItemIcon>
+                    <AccountBalanceIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Bank" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleClick(e, 3, '/setup/product-setup')} selected={selectedIndex === 3}>
+                  <ListItemIcon>
+                    <InventoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Product" />
+                </ListItemButton>
+                <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleClick(e, 4, '/setup/customer-setup')} selected={selectedIndex === 4}>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Customer" />
+                </ListItemButton>
+              </List>
+            </Collapse>
+          
+          </List>
       </Fragment>
     );
-  }
 }
 
 export default withRouter(Menus);

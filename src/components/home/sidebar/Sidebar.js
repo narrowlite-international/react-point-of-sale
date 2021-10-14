@@ -48,7 +48,7 @@ class Sidebar extends Component {
         <div className={classes.logo}>
           <div className={classes.logoContainer}>
             <ShoppingCart />
-            <span>Point Of Sale</span>
+            <span>Smart Trade</span>
           </div>
         </div>
         <Divider />

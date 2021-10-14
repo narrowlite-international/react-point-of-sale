@@ -7,10 +7,20 @@ import product from "../products";
 import vendor from "../vendor";
 import sale from "../sale";
 import NotFound from "../notFound/NotFound";
+import BankSetup from "../setups/bank";
+import CustomerSetup from "../setups/customers";
+import ProductSetup from "../setups/product";
+import BranchSetup from "../setups/branch";
 
 const Routes = () => (
   <Switch style={{ overflow: "auto" }}>
     <Route exact path="/" component={() => <div />} />
+
+    {/* Setups */}
+    <Route exact path="/setup/bank-setup" render={(props) => <BankSetup title="Bank Setup" {...props} />} />
+    <Route exact path="/setup/branch-setup" render={(props) => <BranchSetup title="Branch Setup" {...props} />} />
+    <Route exact path="/setup/product-setup" render={(props) => <ProductSetup title="Products Setup" {...props} />} />
+    <Route exact path="/setup/customer-setup" render={(props) => <CustomerSetup title="Customers Setup" {...props} />} />
 
     {/* Sale */}
     <Route exact path="/sale" component={sale} />
