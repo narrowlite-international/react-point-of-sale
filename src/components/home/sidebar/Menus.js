@@ -12,6 +12,7 @@ import StoreMallDirectoryIcon from '@mui/icons-material/StoreMallDirectory';
 import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PersonIcon from '@mui/icons-material/Person';
+import WorkspacesIcon from '@mui/icons-material/Workspaces';
 
 import { withRouter } from "react-router"; 
 import ViewModule from "material-ui-icons/ViewModule";
@@ -85,7 +86,7 @@ const Menus = (props) => {
                 </ListItemButton>
                 <ListItemButton sx={{ pl: 4 }} onClick={(e) => handleClick(e, 3, '/setup/product-setup')} selected={selectedIndex === 3}>
                   <ListItemIcon>
-                    <InventoryIcon />
+                    <WorkspacesIcon />
                   </ListItemIcon>
                   <ListItemText primary="Product" />
                 </ListItemButton>
@@ -97,7 +98,12 @@ const Menus = (props) => {
                 </ListItemButton>
               </List>
             </Collapse>
-          
+            <ListItemButton onClick={(e) => handleClick(e, 5, '/inventory')} selected={selectedIndex === 5}>
+              <ListItemIcon>
+                <InventoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Inventory" />
+            </ListItemButton>
           </List>
       </Fragment>
     );

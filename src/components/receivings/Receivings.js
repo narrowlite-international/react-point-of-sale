@@ -31,11 +31,10 @@ class Receivings extends Component {
   receivingsColumns = [
     "Order Id",
     "Product",
-    "Vendor",
+    "Barcode",
     "Qty",
-    "Price",
-    "Paid",
-    "Date"
+    "Cost Price",
+    "Selling Price",
   ];
 
   state = {
@@ -138,15 +137,7 @@ class Receivings extends Component {
         />
 
         <div>
-          <Button
-            className={classes.button}
-            variant="raised"
-            color="default"
-            size="small"
-            onClick={this.onListClick}
-          >
-            List
-          </Button>
+          
 
           <Button
             className={classes.button}

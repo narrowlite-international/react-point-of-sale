@@ -22,6 +22,9 @@ const Routes = () => (
     <Route exact path="/setup/product-setup" render={(props) => <ProductSetup title="Products Setup" {...props} />} />
     <Route exact path="/setup/customer-setup" render={(props) => <CustomerSetup title="Customers Setup" {...props} />} />
 
+    {/* Inventory */}
+    <Route exact path="/inventory" component={receivings.Receivings} />
+
     {/* Sale */}
     <Route exact path="/sale" component={sale} />
 

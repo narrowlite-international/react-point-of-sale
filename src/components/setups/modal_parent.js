@@ -1,9 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle'
+
+
+
+
 
 const style = {
     position: 'absolute',
@@ -17,34 +27,37 @@ const style = {
     p: 4,
   };
 
-export default function CustomParentModal({open, setOpen}){
+export default function CustomParentModal({open, setOpen, title, children}){
 
     
     const handleClose = () => setOpen(false);
 
     return (
-        <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
+      <Dialog
+        fullWidth={true}
+        maxWidth={"lg"}
         open={open}
         onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
       >
-        <Fade in={open}>
-          <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              Text in a modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogContent>
+          {/* <DialogContentText>
+            You can set my maximum width and whether to adapt or not.
+          </DialogContentText> */}
+          <Box
+            noValidate
+            component="form"
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              m: 'auto',
+              width: 'fit-content',
+            }}
+          >
+            {children} 
           </Box>
-        </Fade>
-      </Modal>
+        </DialogContent>
+      </Dialog>
     )
 
 
